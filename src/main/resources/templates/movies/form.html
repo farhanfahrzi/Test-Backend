@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add/Edit Movie</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            width: 40%;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .delete-button {
+            background-color: #dc3545;
+        }
+        .delete-button:hover {
+            background-color: #a71d2a;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 th:text="${movie.id != null ? 'Edit Movie' : 'Add Movie'}"></h1>
+    <form th:action="@{/movies}" method="post" th:object="${movie}">
+        <input type="hidden" th:field="*{id}" />
+        <label>Title:</label>
+        <input type="text" th:field="*{title}" required/><br>
+        <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: red;"></div>
+
+        <label>Director:</label>
+        <input type="text" th:field="*{director}" required/><br>
+        <div th:if="${#fields.hasErrors('director')}" th:errors="*{director}" style="color: red;"></div>
+
+        <label>Summary:</label>
+        <textarea th:field="*{summary}" maxlength="100" required></textarea><br>
+        <div th:if="${#fields.hasErrors('summary')}" th:errors="*{summary}" style="color: red;"></div>
+
+        <label>Genres:</label>
+        <select th:field="*{genres}" multiple required>
+            <option value="Drama">Drama</option>
+            <option value="Action">Action</option>
+            <option value="Animation">Animation</option>
+            <option value="Sci-Fi">Sci-Fi</option>
+            <option value="Horror">Horror</option>
+        </select><br>
+        <div th:if="${#fields.hasErrors('genres')}" th:errors="*{genres}" style="color: red;"></div>
+
+        <button type="submit">Save</button>
+
+    </form>
+    <form th:action="@{/movies/{id}/delete(id=${movie.id})}" method="post">
+        <button th:if="${movie.id != null}" type="submit" class="delete-button"
+                th:onclick="'if(confirm(\'Are you sure you want to delete this movie?\')) location.href='/movies/' + ${movie.id} + '/delete''">Delete</button>
+    </form>
+
+    <button type="button" onclick="window.location.href='/movies'">Back</button>
+</div>
+</body>
+</html>

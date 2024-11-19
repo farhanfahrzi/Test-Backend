@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Movies Collection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .movie-card {
+            background: #fff;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .movie-details {
+            width: 80%;
+        }
+        .movie-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .add-movie {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Movies Collection</h1>
+    <div id="success-message" th:if="${successMessage}" th:text="${successMessage}"
+         style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom: 20px;"></div>
+
+    <!-- Pesan Error -->
+    <div id="error-message" th:if="${errorMessage}" th:text="${errorMessage}"
+         style="background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px; margin-bottom: 20px;"></div>
+
+    <!-- Form Search -->
+    <form method="get" th:action="@{/movies}">
+        <input type="text" name="search" placeholder="Search by title..." />
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Daftar Film -->
+    <div th:each="movie : ${movies}" class="movie-card">
+        <div class="movie-details">
+            <strong th:text="${movie.title}"></strong><br>
+            <em th:text="${movie.director}"></em><br>
+            <span th:text="${movie.summary}"></span><br>
+            <span th:each="genre : ${movie.genres}" th:text="${genre} + ' '"></span>
+        </div>
+        <div class="movie-buttons">
+            <a th:href="@{/movies/{id}(id=${movie.id})}">
+                <button>Edit</button>
+            </a>
+        </div>
+    </div>
+
+    <!-- Tombol Add Movie -->
+    <div class="add-movie">
+        <a href="/movies/new">
+            <button>Add Movie</button>
+        </a>
+    </div>
+
+</div>
+
+<!-- JavaScript untuk Pop-Up -->
+<script>
+    window.onload = function () {
+        const successMessage = document.getElementById('success-message');
+        const errorMessage = document.getElementById('error-message');
+        if (successMessage) {
+            alert(successMessage.textContent);
+            successMessage.style.display = "none";
+        }
+        if (errorMessage) {
+            alert(errorMessage.textContent);
+            errorMessage.style.display = "none";
+        }
+    };
+</script>
+<script>
+    window.onload = function () {
+        const errorMessages = document.querySelectorAll('.field-error');
+        if (errorMessages.length > 0) {
+            alert("Please fix the errors in the form.");
+        }
+    };
+</script>
+
+</body>
+</html>
