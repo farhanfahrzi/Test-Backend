@@ -22,8 +22,7 @@ This is a simple CRUD application to manage a movie collection using Java Spring
 ## How to Run
 1. Clone this repository:
    ```bash
-   git clone https://github.com/your-username/movie-crud-app.git
-   cd movie-crud-app
+   git clone https://github.com/farhanfahrzi/Test-Backend.git
 2. Build and run the application:
    ```bash
    ./mvnw spring-boot:run
