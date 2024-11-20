@@ -34,6 +34,12 @@ This is a simple CRUD application to manage a movie collection using Java Spring
 - Spring Boot 3+
 - Thymeleaf
 - PostgreSQL
+- Spring IoC
+- Java Stream
+- Advance Native SQL query
+- AOP
+- Containerization & microservices
+
 
 ## Author
 Farhan Akhmad Fahrezi
